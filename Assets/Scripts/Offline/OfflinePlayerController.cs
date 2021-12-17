@@ -13,6 +13,7 @@ public class OfflinePlayerController : MonoBehaviour
     public bool canPlay;
     public GameObject selectedGamePiece;
     public bool holdingPiece;
+    public GameObject sizeDisplayText;
     Vector3 lastHitPosition;
     Vector3 gamePieceStartPos;
     float distance;
@@ -40,11 +41,22 @@ public class OfflinePlayerController : MonoBehaviour
             lastHitPosition = hit.transform.position;
         }
         //Selected the Piece that will be moved
-        if(Physics.Raycast(ray,out hit) && Input.GetMouseButtonDown(0) && canPlay){
+        if(Physics.Raycast(ray,out hit) ){
+            if(hit.transform.gameObject.CompareTag("GamePieces")){
+                    sizeDisplayText.SetActive(true);
+                    sizeDisplayText.GetComponent<TextMesh>().text =hit.transform.GetComponent<pieceManager>().Size.ToString();
+                    sizeDisplayText.transform.GetChild(0).GetComponent<TextMesh>().text =hit.transform.GetComponent<pieceManager>().Size.ToString();
+                    sizeDisplayText.transform.position = hit.transform.position;
+                    
+                }
 
-            if(selectedGamePiece == null && holdingPiece==false){
+            if(selectedGamePiece == null && holdingPiece==false&& canPlay&& Input.GetMouseButtonDown(0)){
+                    
+                
 
-                if(hit.transform.gameObject.CompareTag("GamePieces")&& checkGamePiece(hit.transform.gameObject,PlayerIndex))
+
+
+                if(hit.transform.gameObject.CompareTag("GamePieces") && checkGamePiece(hit.transform.gameObject,PlayerIndex) && !hit.transform.GetComponent<pieceManager>().hasBeenPlaced)
                 {
                     selectedGamePiece = hit.transform.gameObject;
                     gamePieceStartPos = selectedGamePiece.transform.position;
@@ -89,7 +101,7 @@ public class OfflinePlayerController : MonoBehaviour
                     
                     selectedGamePiece.transform.parent = hit.transform;
                     
-                    
+                    selectedGamePiece.GetComponent<pieceManager>().hasBeenPlaced = true;
                     selectedGamePiece = null;
                     holdingPiece = false;
                     //changePlayer();
