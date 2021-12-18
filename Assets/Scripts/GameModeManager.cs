@@ -14,7 +14,7 @@ public class GameModeManager : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.P)){
-            RandomizePieceSize(GameObject.FindGameObjectsWithTag("GamePieces"));
+            //RandomizePieceSize(GameObject.FindGameObjectsWithTag("GamePieces"));
         }
     }
     public void RandomizePieceSize(GameObject singlePiece){
