@@ -46,7 +46,7 @@ public class OfflinePlayerController : MonoBehaviour
                     sizeDisplayText.SetActive(true);
                     sizeDisplayText.GetComponent<TextMesh>().text =hit.transform.GetComponent<pieceManager>().Size.ToString();
                     sizeDisplayText.transform.GetChild(0).GetComponent<TextMesh>().text =hit.transform.GetComponent<pieceManager>().Size.ToString();
-                    sizeDisplayText.transform.position = hit.transform.position;
+                    sizeDisplayText.transform.position = hit.transform.position + new Vector3(0,1f,0);
                     
                 }
 
@@ -68,6 +68,8 @@ public class OfflinePlayerController : MonoBehaviour
                 }
 
             }
+        }else{
+            sizeDisplayText.SetActive(false);
         }
         
         if(holdingPiece){
