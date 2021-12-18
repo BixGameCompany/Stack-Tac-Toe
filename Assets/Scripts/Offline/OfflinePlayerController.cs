@@ -124,13 +124,12 @@ public class OfflinePlayerController : MonoBehaviour
         Quaternion playerTwoRotation = new Quaternion(0,180,0,0);
         if(PlayerIndex == 1){
             OMG.changePlayer(2);
-            try{transform.parent.rotation = Quaternion.Lerp(playerOneRotation,playerTwoRotation,1f * Time.time);}catch{}
+            //try{transform.parent.rotation = Quaternion.Lerp(playerOneRotation,playerTwoRotation,1f * Time.time);}catch{}
+            transform.parent.rotation = playerTwoRotation;
             PlayerIndex =2;
         }else{
-            try{
-                
-                transform.parent.rotation = Quaternion.Lerp(playerTwoRotation,playerOneRotation,1f * Time.time);}catch{}
-
+            //try{transform.parent.rotation = Quaternion.Lerp(playerTwoRotation,playerOneRotation,1f * Time.time);}catch{}
+            transform.parent.rotation = playerOneRotation;
             OMG.changePlayer(1);
             PlayerIndex = 1;
         }
@@ -170,33 +169,33 @@ public class OfflinePlayerController : MonoBehaviour
                     return false;
                 }else{
 
-                Debug.Log("Size of Current Piece: "+ currentPiece.Size +" || Size of Piece on Spot: "+ pieceOnSpot.Size);
+                //Debug.Log("Size of Current Piece: "+ currentPiece.Size +" || Size of Piece on Spot: "+ pieceOnSpot.Size);
                 switch(currentPiece.Size){
                     case pieceManager.pieceSize.Small:
                         
                         if(pieceOnSpot.Size != pieceManager.pieceSize.Small&&pieceOnSpot.Size != pieceManager.pieceSize.Medium&&pieceOnSpot.Size != pieceManager.pieceSize.Large){
-                            Debug.Log("Small and can be placed");
+                            //Debug.Log("Small and can be placed");
                             return true;
                         }else{
-                            Debug.Log("Small and can not be placed");
+                            //Debug.Log("Small and can not be placed");
                             return false;
                         } 
                     case pieceManager.pieceSize.Medium:
                         
                         if(pieceOnSpot.Size != pieceManager.pieceSize.Medium&&pieceOnSpot.Size != pieceManager.pieceSize.Large){
-                            Debug.Log("Medium and can be placed");
+                            //Debug.Log("Medium and can be placed");
                             return true;
                         }else{
-                            Debug.Log("Medium and can not be placed");
+                            //Debug.Log("Medium and can not be placed");
                             return false;
                         }
                         
                     case pieceManager.pieceSize.Large:
                         if(pieceOnSpot.Size != pieceManager.pieceSize.Large){
-                            Debug.Log("Large and can be placed");
+                            //Debug.Log("Large and can be placed");
                             return true;
                         }else{
-                            Debug.Log("Large and can not be placed");
+                            //Debug.Log("Large and can not be placed");
                             return false;
                         }
                 }

@@ -19,8 +19,8 @@ public class OfflineGameManager : MonoBehaviour
     public AudioClip[] soundEffects;
     public GameObject[] playersPieces;
 
-    Vector3 p1pos;
-    Vector3 p2pos;
+    public Vector3 p1pos;
+    public Vector3 p2pos;
     public Slider volSlider;
     
     private void Start() {
@@ -56,6 +56,10 @@ public class OfflineGameManager : MonoBehaviour
             winText.enabled = true;
             winText.text = "Player 2 Win!";
             Invoke("ResetBoard",1f);
+        }else if(playerIndex == 3){
+            winText.enabled = true;
+            winText.text = "Draw!";
+            Invoke("ResetBoard",1f);
         }
     }
     public void playAudio(int soundIndex){
@@ -63,22 +67,12 @@ public class OfflineGameManager : MonoBehaviour
     }
     void ResetBoard(){
         winText.enabled = false;
-        foreach(GameObject g in GetComponent<winCheck>().gameSpots){
-                try{Destroy(g.transform.GetChild(0).gameObject);}
-                catch{}
-        }
         GameObject.FindGameObjectWithTag("Player").GetComponent<OfflinePlayerController>().changePlayer();
         foreach(GameObject g in GameObject.FindGameObjectsWithTag("GamePieces")){
-            if(g.transform.parent.gameObject.name.StartsWith("P1")){
-                p1pos = g.transform.parent.position;
-            }else if(g.transform.parent.gameObject.name.StartsWith("P1")){
-                p2pos = g.transform.parent.position;
-            }
-            try{Destroy(g);}
-            catch{}
+            try{Destroy(g);}catch{}
         }
         Instantiate(playersPieces[0],p1pos,Quaternion.identity);
-        Instantiate(playersPieces[1],new Vector3(5.25f,0,-15),Quaternion.Euler(0,180,0));
+        Instantiate(playersPieces[1],p2pos,Quaternion.Euler(0,180,0));
     }
     public void quitGame(){
         Application.Quit();

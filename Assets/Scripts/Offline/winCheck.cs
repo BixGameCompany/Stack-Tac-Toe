@@ -68,15 +68,41 @@ public class winCheck : MonoBehaviour
                     playerOnSpot.Add(0);
                }
         }
+        bool isDraw(){
+            
+            List<GameObject> p1 = new List<GameObject>();
+            List<GameObject> p2 = new List<GameObject>();
+                p1.Clear();
+                p2.Clear();
+            foreach(GameObject g in GameObject.FindGameObjectsWithTag("GamePieces")){
+                if(g.name.StartsWith("1") && !p1.Contains(g) &&!g.GetComponent<pieceManager>().hasBeenPlaced){
+                    p1.Add(g);
+                }else if(g.name.StartsWith("2") && !p2.Contains(g)&&!g.GetComponent<pieceManager>().hasBeenPlaced){
+                    p2.Add(g);
+                }
+            }
+            if(p1.Count == 0&& p2.Count == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
         //Winning Algorithm
         bool winner = false;
+        bool draw = false;
         foreach(int[] i in winTypes){
-            if(!winner){
+            if(!winner && !draw){
                 foreach(int p in player){
-                    if(!winner){
+                    if(!winner && !draw){
                         if(playerOnSpot[spotIndex.IndexOf(i[0])] == p &&playerOnSpot[spotIndex.IndexOf(i[1])] == p&&playerOnSpot[spotIndex.IndexOf(i[2])] == p){
                             OMG.addScore(p);
                             OMG.playAudio(1);
+                        }else{
+                            if(isDraw()){
+                                Debug.Log("Draw!");
+                                draw = true;
+                                OMG.addScore(3);
+                            }
                         }
                     }
                 }
